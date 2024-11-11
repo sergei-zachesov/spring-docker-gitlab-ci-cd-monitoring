@@ -17,7 +17,10 @@
 * Удаление ключей сгенерированных файлов `rm id_rsa.pub`, `rm id_rsa`
 * Установить доступ к `authorized_keys`: `chmod 600 ~/.ssh/authorized_keys`
 * Настройка не `root` пользователя, на работу с `docker` без `sudo`.
-  Подробнее https://docs.docker.com/engine/install/linux-postinstall/
+  Подробнее https://docs.docker.com/engine/install/linux-postinstall/, https://askubuntu.com/a/477554, https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
+    * Добавление группы: `sudo groupadd  docker`
+    * Помещение юзера в группу: `sudo usermod -aG docker $USER`
+    * Доступ к сокетам docker: sudo chmod 666 /var/run/docker.sock
 
 ## 3. Переменные окружения CI/CD
 
@@ -26,4 +29,4 @@
 * `$SSH_PRIVATE_KEY_PROD(_TEST)` - секретный SSH-ключ
 * `$SERVICE_NAME` - наименование сервиса
 * `$HOST_PROD(_TEST)` - хост сервера
-* `$USER_PROD(_TEST)` - user сервера
+* `$USER_PROD(_TEST)` - юзер сервера
