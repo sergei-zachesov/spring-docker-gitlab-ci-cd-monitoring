@@ -1,0 +1,55 @@
+variables:
+  REGISTRY: "..../${SERVICE_NAME}"
+  GIT_SSL_NO_VERIFY: "true"
+  DOCKER_DRIVER: overlay2
+
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image:
+    name: gcr.io/kaniko-project/executor:v1.23.2-debug
+    entrypoint: [ "" ]
+  script:
+    - /kaniko/executor
+      --context "${CI_PROJECT_DIR}"
+      --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "${CI_REGISTRY_IMAGE}:latest"
+
+.deploy-template:
+  stage: deploy
+  image: docker:latest
+  before_script:
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - eval $(ssh-agent -s)
+    - echo "${SSH_PRIVATE_KEY}" | tr -d '\r' | ssh-add -
+    - ssh-keyscan $HOST >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker stop ${SERVICE_NAME} || true
+    - docker rm ${SERVICE_NAME} || true
+    - docker compose -f docker-compose.yml up -d
+
+deploy-test:
+  extends: .deploy-template
+  only:
+    - develop
+  variables:
+    DOCKER_HOST: "ssh://$USER_TEST@$HOST_TEST"
+    HOST: $HOST_TEST
+    USER: $USER_TEST
+    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_TEST
+
+deploy-prod:
+  extends: .deploy-template
+  only:
+    - master
+  variables:
+    DOCKER_HOST: "ssh://$USER_PROD@$HOST_PROD"
+    HOST: $HOST_PROD
+    USER: $USER_PROD
+    SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_PROD

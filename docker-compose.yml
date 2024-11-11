@@ -1,0 +1,10 @@
+services:
+
+  service:
+    container_name: ${SERVICE_NAME}
+    image: ".../${SERVICE_NAME}:latest"
+    volumes:
+      - /home/${SERVICE_NAME}/logs:/app/logs
+
+    ports:
+      - "8081:8080"
