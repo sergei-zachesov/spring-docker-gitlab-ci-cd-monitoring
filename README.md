@@ -4,17 +4,17 @@
 
 ## 1. Установка и регистрация Gitlab Runner
 
-Производится с помощью [репозитория](https://github.com/sergei-zachesov/docker-compose-gitlab-runner).
+Можно выполнить с [помощью](https://github.com/sergei-zachesov/docker-compose-gitlab-runner).
 
 ## 2. Настройка SSH-ключа и сервера
 
 На стороне целевого сервера приложения.
 
-* Генерация SSH-ключа: `ssh-keygen -t rsa -b 4096`
+* Генерация SSH-ключа: `ssh-keygen -t rsa -b 4096`. На вопросы жмем Enter
 * Добавление публичного ключа в `authorized_keys`: `cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`
-* Копирования секретного ключа `cat ~/.ssh/id_rsa` и копирование его в репозиторий gitlab в Settings->CI/CD->Variables
+* Вывод в терминал секретного ключа `cat ~/.ssh/id_rsa` и скопировать его в репозиторий gitlab в Settings->CI/CD->Variables
   `$SSH_PRIVATE_KEY_PROD` или `$SSH_PRIVATE_KEY_TEST`. Возможно убрать `Protect variable`
-* Удаление ключей сгенерированных файлов `rm id_rsa.pub`, `rm id_rsa`
+* Удаление ключей сгенерированных файлов `rm id_rsa.pub && rm id_rsa`
 * Установить доступ к `authorized_keys`: `chmod 600 ~/.ssh/authorized_keys`
 * Настройка не `root` пользователя, на работу с `docker` без `sudo`.
   Подробнее https://docs.docker.com/engine/install/linux-postinstall/, https://askubuntu.com/a/477554, https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
