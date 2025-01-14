@@ -20,7 +20,7 @@
   Подробнее https://docs.docker.com/engine/install/linux-postinstall/, https://askubuntu.com/a/477554, https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
     * Добавление группы: `sudo groupadd  docker`
     * Помещение юзера в группу: `sudo usermod -aG docker $USER`
-    * Доступ к сокетам docker: sudo chmod 666 /var/run/docker.sock
+    * Доступ к сокетам docker: `sudo chmod 666 /var/run/docker.sock`
 
 ## 3. Переменные окружения CI/CD
 
