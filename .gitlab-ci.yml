@@ -2,12 +2,15 @@ variables:
   REGISTRY: "..../${SERVICE_NAME}"
   GIT_SSL_NO_VERIFY: "true"
   DOCKER_DRIVER: overlay2
+  DOCKER_TAG_TEST: latest-test
+  DOCKER_TAG_PROD: latest
 
 stages:
   - build
   - deploy
 
-build:
+
+.build-template:
   stage: build
   image:
     name: gcr.io/kaniko-project/executor:v1.23.2-debug
@@ -16,7 +19,22 @@ build:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --destination "${CI_REGISTRY_IMAGE}:latest"
+      --destination "${CI_REGISTRY_IMAGE}:${TAG}"
+
+build-test:
+  extends: .build-template
+  only:
+    - develop
+  variables:
+    TAG: ${DOCKER_TAG_TEST}
+
+build-prod:
+  extends: .build-template
+  only:
+    - master
+  variables:
+    TAG: ${DOCKER_TAG_PROD}
+
 
 .deploy-template:
   stage: deploy
@@ -44,7 +62,8 @@ deploy-test:
     HOST: $HOST_TEST
     USER: $USER_TEST
     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_TEST
-    SPRING_PROFILES_ACTIVE: test
+    SPRING_PROFILES: test
+    TAG: ${DOCKER_TAG_TEST}
 
 deploy-prod:
   extends: .deploy-template
@@ -55,4 +74,5 @@ deploy-prod:
     HOST: $HOST_PROD
     USER: $USER_PROD
     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_PROD
-    SPRING_PROFILES_ACTIVE: prod
+    SPRING_PROFILES: prod
+    TAG: ${DOCKER_TAG_PROD}

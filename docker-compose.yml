@@ -2,10 +2,10 @@ services:
 
   service:
     container_name: ${SERVICE_NAME}
-    image: ".../${SERVICE_NAME}:latest"
+    image: ".../${SERVICE_NAME}:${TAG}"
     volumes:
       - /home/${SERVICE_NAME}/logs:/app/logs
     environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES}
     ports:
       - "8081:8080"
