@@ -5,6 +5,7 @@ services:
     image: ".../${SERVICE_NAME}:latest"
     volumes:
       - /home/${SERVICE_NAME}/logs:/app/logs
-
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
     ports:
       - "8081:8080"

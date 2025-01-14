@@ -44,6 +44,7 @@ deploy-test:
     HOST: $HOST_TEST
     USER: $USER_TEST
     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_TEST
+    SPRING_PROFILES_ACTIVE: test
 
 deploy-prod:
   extends: .deploy-template
@@ -54,3 +55,4 @@ deploy-prod:
     HOST: $HOST_PROD
     USER: $USER_PROD
     SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY_PROD
+    SPRING_PROFILES_ACTIVE: prod
