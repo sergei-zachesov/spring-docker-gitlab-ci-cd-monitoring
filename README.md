@@ -13,7 +13,7 @@
 * Генерация SSH-ключа: `ssh-keygen -t rsa -b 4096`. На вопросы жмем Enter
 * Добавление публичного ключа в `authorized_keys`: `cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys`
 * Вывод в терминал секретного ключа `cat ~/.ssh/id_rsa` и скопировать его в репозиторий gitlab в Settings->CI/CD->Variables
-  `$SSH_PRIVATE_KEY_PROD` или `$SSH_PRIVATE_KEY_TEST`. Возможно убрать `Protect variable`
+  `$SSH_PRIVATE_KEY_PROD` или `$SSH_PRIVATE_KEY_TEST`.
 * Удаление ключей сгенерированных файлов `rm ~/.ssh/id_rsa.pub && rm ~/.ssh/id_rsa`
 * Установить доступ к `authorized_keys`: `chmod 600 ~/.ssh/authorized_keys`
 * Настройка не `root` пользователя, на работу с `docker` без `sudo`.
@@ -24,7 +24,7 @@
 
 ## 3. Переменные окружения CI/CD
 
-Устанавливаются в Settings->CI/CD->Variables. Отдельно для разных контуров. Возможно убрать `Protect variable`.
+Устанавливаются в Settings->CI/CD->Variables. Отдельно для разных контуров. Возможно убрать `Protect variable`, либо сделать ветку `Protect`.
 
 * `$SSH_PRIVATE_KEY_PROD(_TEST)` - секретный SSH-ключ
 * `$SERVICE_NAME` - наименование сервиса
