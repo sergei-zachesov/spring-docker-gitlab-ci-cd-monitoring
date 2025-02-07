@@ -20,7 +20,13 @@ stages:
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "${CI_REGISTRY_IMAGE}:${TAG}"
-
+      --cache=true
+      --cache-run-layers
+      --cache-copy-layers
+      --log-timestamp=true
+      --image-download-retry=2
+  retry: 2
+  
 build-test:
   extends: .build-template
   only:
