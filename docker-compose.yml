@@ -9,3 +9,28 @@ services:
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES}
     ports:
       - "8081:8080"
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - ${PROMETHEUS_CONFIG:-/home/monitoring/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--log.level=debug'
+    ports:
+      - "${PROMETHEUS_PORT:-9090}:9090"
+
+  grafana:
+    build: "${GRAFANA_SOURCE:-/home/monitoring/grafana}"
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "${GRAFANA_PORT:-3000}:3000"
+    volumes:
+      - "${GRAFANA_SOURCE:-/home/monitoring/grafana}:/var/lib/grafana"
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_SECURITY_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_SECURITY_ADMIN_PASSWORD:-admin}
+    user: "${GRAFANA_OS_USER_ID:-0}"
