@@ -23,7 +23,9 @@
     * Помещение юзера в группу: `sudo usermod -aG docker $USER`
     * Доступ к сокетам docker: `sudo chmod 666 /var/run/docker.sock`
 
-## 3. Переменные окружения CI/CD
+## 3 Настройки через UI Gitlab
+
+### 3.1 Переменные окружения CI/CD
 
 Устанавливаются в Settings->CI/CD->Variables. Отдельно для разных контуров. Возможно убрать `Protect variable`, либо
 сделать ветку `Protect`.
@@ -33,7 +35,17 @@
 * `$HOST_PROD(_TEST)` - хост сервера
 * `$USER_PROD(_TEST)` - юзер сервера
 
-## 4. Мониторинг приложения
+### 3.2 Доступ к использованию Container registry
+
+Settings->General->Visibility, project features, permissions->Container registry - ON
+
+## 4. Путь сontainer registry
+
+В файле проекта [docker-compose.yml](docker-compose.yml), в  `image: ".../${SERVICE_NAME}:${TAG}"` вместо `...` указать
+путь до сontainer registry. Его можно взять после первого `build` Deploy->Container registry->Copy image path и копируем
+все до названия образа.
+
+## 5. Мониторинг приложения
 
 * Директорию из проекта `monitoring` поместить в нужную директорию (по-умолчанию `/home/monitoring`). Указать путь до
   директории в `.env` (`PROMETHEUS_CONFIG`, `GRAFANA_SOURCE`)
