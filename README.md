@@ -39,6 +39,14 @@
 
 Settings->General->Visibility, project features, permissions->Container registry - ON
 
+### 3.3 Политика очистки тегов кэша
+
+Settings->Packages and registries settings->Cleanup policies->Edit(Set) clenup Cleanup :
+- Enable cleanup policy
+- Keep the most recent: 10 tags per image name
+- Keep tags matching: latest, latest-test
+- Remove tags older than: 30 days
+
 ## 4. Путь сontainer registry
 
 В файле проекта [docker-compose.yml](docker-compose.yml), в  `image: ".../${SERVICE_NAME}:${TAG}"` вместо `...` указать
