@@ -43,6 +43,7 @@ Settings->General->Visibility, project features, permissions->Container registry
 
 Settings->Packages and registries settings->Cleanup policies->Edit(Set) clenup Cleanup :
 - Enable cleanup policy
+- Run cleanup: Every week
 - Keep the most recent: 10 tags per image name
 - Keep tags matching: latest, latest-test
 - Remove tags older than: 30 days
