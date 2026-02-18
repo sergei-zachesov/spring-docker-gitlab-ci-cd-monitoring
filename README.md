@@ -48,6 +48,11 @@ Settings->Packages and registries settings->Cleanup policies->Edit(Set) clenup C
 - Keep tags matching: latest, latest-test
 - Remove tags older than: 30 days
 
+### 3.3 Активация существующих раннеров
+
+Устанавливаются в Settings->CI/CD->Runners->Available Runners, далее выбираются из категоарии с помощью Assing to project.
+
+
 ## 4. Путь сontainer registry
 
 В файле проекта [docker-compose.yml](docker-compose.yml), в  `image: ".../${SERVICE_NAME}:${TAG}"` вместо `...` указать
