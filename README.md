@@ -16,7 +16,7 @@
   Variables
   `$SSH_PRIVATE_KEY_PROD` или `$SSH_PRIVATE_KEY_TEST`.
 * Удаление ключей сгенерированных файлов `rm ~/.ssh/id_rsa.pub && rm ~/.ssh/id_rsa`
-* Установить доступ к `authorized_keys`: `chmod 600 ~/.ssh/authorized_keys`
+* Установить доступ к `authorized_keys`: `chmod 644 ~/.ssh/authorized_keys`
 * Настройка не `root` пользователя, на работу с `docker` без `sudo`.
   Подробнее https://docs.docker.com/engine/install/linux-postinstall/, https://askubuntu.com/a/477554, https://stackoverflow.com/questions/48957195/how-to-fix-docker-got-permission-denied-issue
     * Добавление группы: `sudo groupadd  docker`
